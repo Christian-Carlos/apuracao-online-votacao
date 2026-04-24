@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <style>
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #007bff, #00c6ff);
+      padding: 10px;
+      color: #111827;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      background: #f3f3f3;
+      padding: 18px;
+      border-radius: 18px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .titulo {
+      margin: 0;
+      font-size: 30px;
+      font-weight: 700;
+    }
+
+    .subinfo {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .pill {
+      background: #eef5ff;
+      color: #114488;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .pill.status {
+      background: #ecfdf5;
+      color: #166534;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 16px;
+    }
+
+    .categoria {
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+
+    .categoria-topo {
+      padding: 16px;
+      background: linear-gradient(135deg, #1677ee, #0d5bd7);
+      color: white;
+    }
+
+    .categoria-topo h3 {
+      margin: 0 0 8px;
+      font-size: 20px;
+      line-height: 1.3;
+    }
+
+    .categoria-topo .meta {
+      font-size: 14px;
+      opacity: 0.95;
+      font-weight: 700;
+    }
+
+    .bloco-destaque {
+      padding: 14px 16px 0;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .destaque {
+      display: flex;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 14px;
+      align-items: center;
+    }
+
+    .destaque.titular {
+      background: #dcfce7;
+      border: 2px solid #22c55e;
+    }
+
+    .destaque.suplente {
+      background: #fef3c7;
+      border: 2px solid #f59e0b;
+    }
+
+    .foto-wrap {
+      width: 72px;
+      height: 72px;
+      min-width: 72px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: #ddd;
+      flex-shrink: 0;
+    }
+
+    .foto-wrap img {
+      width: 72px;
+      height: 72px;
+      display: block;
+      object-fit: cover;
+      border-radius: 50%;
+      background: #ddd;
+    }
+
+    .selo {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 10px;
+      border-radius: 999px;
+      margin-bottom: 6px;
+      color: #111827;
+      background: rgba(255,255,255,0.7);
+    }
+
+    .nome {
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 4px;
+    }
+
+    .votos {
+      font-size: 15px;
+      font-weight: 700;
+      color: #374151;
+    }
+
+    .ranking {
+      padding: 14px 16px 16px;
+    }
+
+    .ranking h4 {
+      margin: 0 0 12px;
+      font-size: 16px;
+      color: #1677ee;
+      border-bottom: 2px solid #e5e7eb;
+      padding-bottom: 8px;
+    }
+
+    .linha-ranking {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .linha-ranking:last-child {
+      border-bottom: none;
+    }
+
+    .posicao {
+      width: 34px;
+      min-width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #eff6ff;
+      color: #1d4ed8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .linha-ranking .foto-wrap,
+    .linha-ranking .foto-wrap img {
+      width: 54px;
+      height: 54px;
+      min-width: 54px;
+    }
+
+    .linha-ranking .nome {
+      font-size: 16px;
+      margin: 0 0 2px;
+    }
+
+    .linha-ranking .votos {
+      font-size: 14px;
+    }
+
+    .vazio {
+      background: white;
+      padding: 24px;
+      text-align: center;
+      border-radius: 16px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      font-weight: 700;
+    }
+
+    .rodape {
+      margin-top: 16px;
+      font-size: 13px;
+      color: #374151;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    @media (max-width: 640px) {
+      body { padding: 6px; }
+      .container { padding: 12px; border-radius: 14px; }
+      .titulo { font-size: 24px; }
+      .grid { grid-template-columns: 1fr; }
+      .categoria-topo h3 { font-size: 18px; }
+      .nome { font-size: 17px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1 class="titulo">Apuração de Votos</h1>
+      <div class="subinfo">
+        <div class="pill" id="atualizadoEm">Atualizado em: --</div>
+        <div class="pill status" id="statusAtualizacao">Atualização automática ativa</div>
+      </div>
+    </div>
+
+    <div id="gridResultados" class="grid"></div>
+
+    <div class="rodape">
+      Atualização automática a cada 10 segundos.
+    </div>
+  </div>
+
+  <script>
+    const FOTO_FALLBACK = "https://www.gravatar.com/avatar?d=mp&s=200";
+    const INTERVALO_ATUALIZACAO = 10000;
+    let atualizando = false;
+
+    function extrairId(url) {
+      if (!url) return "";
+
+      const matchId = url.match(/[?&]id=([^&]+)/);
+      if (matchId) return matchId[1];
+
+      const matchUc = url.match(/\/uc\?[^#]*id=([^&]+)/);
+      if (matchUc) return matchUc[1];
+
+      const matchPath = url.match(/\/d\/([^/]+)/);
+      if (matchPath) return matchPath[1];
+
+      return "";
+    }
+
+    function montarFoto(url) {
+      const id = extrairId(url);
+      if (id) {
+        return "https://drive.google.com/thumbnail?id=" + id + "&sz=w300";
+      }
+      return url || FOTO_FALLBACK;
+    }
+
+    function escapeHtml(str) {
+      return String(str || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
+    }
+
+    function cardDestaque(tipo, item) {
+      if (!item) {
+        return `
+          <div class="destaque ${tipo}">
+            <div class="foto-wrap">
+              <img src="${FOTO_FALLBACK}" alt="Sem foto">
+            </div>
+            <div>
+              <div class="selo">${tipo === "titular" ? "Titular" : "Suplente"}</div>
+              <div class="nome">Sem votos até o momento</div>
+              <div class="votos">0 voto</div>
+            </div>
+          </div>
+        `;
+      }
+
+      const foto = montarFoto(item.foto);
+      const selo = tipo === "titular" ? "Titular" : "Suplente";
+
+      return `
+        <div class="destaque ${tipo}">
+          <div class="foto-wrap">
+            <img src="${escapeHtml(foto)}" alt="Foto de ${escapeHtml(item.nome)}" onerror="this.onerror=null;this.src='${FOTO_FALLBACK}'">
+          </div>
+          <div>
+            <div class="selo">${selo}</div>
+            <div class="nome">${escapeHtml(item.nome)}</div>
+            <div class="votos">${item.votos} voto(s)</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function linhaRanking(item, index) {
+      const foto = montarFoto(item.foto);
+      return `
+        <div class="linha-ranking">
+          <div class="posicao">${index + 1}</div>
+          <div class="foto-wrap">
+            <img src="${escapeHtml(foto)}" alt="Foto de ${escapeHtml(item.nome)}" onerror="this.onerror=null;this.src='${FOTO_FALLBACK}'">
+          </div>
+          <div>
+            <div class="nome">${escapeHtml(item.nome)}</div>
+            <div class="votos">${item.votos} voto(s)</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderizarResultados(payload) {
+      document.getElementById("atualizadoEm").textContent = "Atualizado em: " + (payload.atualizadoEm || "--");
+      const grid = document.getElementById("gridResultados");
+
+      if (!payload.categorias || !payload.categorias.length) {
+        grid.innerHTML = `<div class="vazio">Nenhum voto encontrado até o momento.</div>`;
+        return;
+      }
+
+      let html = "";
+
+      payload.categorias.forEach(cat => {
+        html += `
+          <div class="categoria">
+            <div class="categoria-topo">
+              <h3>${escapeHtml(cat.categoria)}</h3>
+              <div class="meta">Total de votos na categoria: ${cat.totalVotosCategoria}</div>
+            </div>
+
+            <div class="bloco-destaque">
+              ${cardDestaque("titular", cat.titular)}
+              ${cardDestaque("suplente", cat.suplente)}
+            </div>
+
+            <div class="ranking">
+              <h4>Ranking completo</h4>
+              ${cat.ranking && cat.ranking.length
+                ? cat.ranking.map((item, index) => linhaRanking(item, index)).join("")
+                : `<div class="votos">Sem votos até o momento.</div>`}
+            </div>
+          </div>
+        `;
+      });
+
+      grid.innerHTML = html;
+    }
+
+    function carregarResultados() {
+      if (atualizando) return;
+      atualizando = true;
+      document.getElementById("statusAtualizacao").textContent = "Atualizando...";
+
+      google.script.run
+        .withSuccessHandler(function(payload) {
+          atualizando = false;
+          document.getElementById("statusAtualizacao").textContent = "Atualização automática ativa";
+          renderizarResultados(payload);
+        })
+        .withFailureHandler(function(err) {
+          atualizando = false;
+          document.getElementById("statusAtualizacao").textContent = "Falha ao atualizar";
+          console.error(err);
+        })
+        .obterResultadosApuracao();
+    }
+
+    carregarResultados();
+    setInterval(carregarResultados, INTERVALO_ATUALIZACAO);
+  </script>
+</body>
+</html>
